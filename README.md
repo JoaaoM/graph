@@ -1,5 +1,4 @@
-# graph
-Graph - UNAERP
+# Graph - UNAERP
 Introdução
 Este é um código em Java que implementa um grafo utilizando a estratégia de matriz de adjacência. Um grafo é uma estrutura de dados composta por vértices e arestas, onde os vértices representam os elementos do grafo e as arestas representam as conexões entre eles.
 
