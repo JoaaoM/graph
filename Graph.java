@@ -80,4 +80,73 @@ public class Graph {
         adjacencyMatrix[source][destination] = value;
         adjacencyMatrix[destination][source] = value;
     }
+    
+    public List<Integer> caminho(int a, int b) {
+    Stack<Integer> stack = new Stack<>();
+    boolean[] visited = new boolean[numVertices];
+    stack.push(a);
+    visited[a] = true;
+
+    while (!stack.isEmpty()) {
+        int current = stack.pop();
+        if (current == b) {
+            // Encontrou o caminho, retorna a pilha como lista
+            List<Integer> path = new ArrayList<>(stack);
+            path.add(current);
+            return path;
+        }
+        for (int neighbor : getNeighbors(current)) {
+            if (!visited[neighbor]) {
+                stack.push(neighbor);
+                visited[neighbor] = true;
+            }
+        }
+    }
+    // Não encontrou caminho
+    return null;
+}
+    
+    public static Graph uniao(Graph G1, Graph G2) {
+    int numVertices = G1.numVertices + G2.numVertices;
+    Graph unionGraph = new Graph(numVertices);
+
+    // Adiciona arestas de G1
+    for (int i = 0; i < G1.numVertices; i++) {
+        for (int j = 0; j < G1.numVertices; j++) {
+            int weight = G1.adjacencyMatrix[i][j];
+            if (weight != 0) {
+                unionGraph.addEdge(i, j, weight);
+            }
+        }
+    }
+
+    // Adiciona arestas de G2
+    for (int i = 0; i < G2.numVertices; i++) {
+        for (int j = 0; j < G2.numVertices; j++) {
+            int weight = G2.adjacencyMatrix[i][j];
+            if (weight != 0) {
+                unionGraph.addEdge(G1.numVertices + i, G1.numVertices + j, weight);
+            }
+        }
+    }
+
+    return unionGraph;
+}
+    
+    public static Graph interseccao(Graph G1, Graph G2) {
+    int numVertices = Math.min(G1.numVertices, G2.numVertices);
+    Graph intersectionGraph = new Graph(numVertices);
+
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
+            if (G1.adjacencyMatrix[i][j] != 0 && G2.adjacencyMatrix[i][j] != 0) {
+                intersectionGraph.addEdge(i, j, Math.min(G1.adjacencyMatrix[i][j], G2.adjacencyMatrix[i][j]));
+            }
+        }
+    }
+
+   
+
+
+
 }
